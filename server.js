@@ -1,18 +1,18 @@
 const express = require("express");
+const xlsx = require('xlsx');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+
+let wb = xlsx.readFile('students.xlsx');
+let ws = wb.Sheets['Sheet1'];
 
 app.get('/', (req, res) => {
     res.send("Hey")
 })
 
 app.get('/students', (req, res) => {
-    var data = [
-        { id: 1, name: 'Georgio Mazraani' },
-        { id: 2, name: 'Sarah Al Najjar' },
-        { id: 3, name: 'Marina Mazraani' },
-        { id: 4, name: 'David Mazraani' }
-    ];
+    let data = xlsx.utils.sheet_to_json(ws);
     res.send(data)
 })
 
